@@ -7,6 +7,9 @@ import (
 
 func main() {
 	fmt.Println("HELLLLLLO DEVOPS")
-	time.Sleep(time.Second * 10)
+	for i := 0; i < 10000; i++ {
+		fmt.Println(fmt.Sprintf("HELLO %d", i))
+		time.Sleep(time.Second * 10)
+	}
 	fmt.Println("GOOD BYE")
 }
