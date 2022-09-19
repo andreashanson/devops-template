@@ -10,7 +10,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   SERVICE_JSON: ${{ secrets.KEYFILE }}
   PROJECT_ID: kubernetes-351917
-  CLUSTER_NAME: lennon
+  GKE_CLUSTER: lennon
+  GKE_ZONE: europe-north1	
 
 jobs:
   build-and-push-image:
@@ -50,4 +51,11 @@ jobs:
       - name: Make docker use gcloud CLI
         run: |
           gcloud --quiet auth configure-docker
+
+      - name: Get the GKE credentials so we can deploy to the cluster
+        uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GKE_SA_KEY }}
      
