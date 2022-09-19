@@ -46,4 +46,8 @@ jobs:
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           project_id: ${{ env.PROJECT_ID }}
+
+      - name: Make docker use gcloud CLI
+        run: |
+          gcloud --quiet auth configure-docker
      
