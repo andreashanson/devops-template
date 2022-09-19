@@ -71,3 +71,4 @@ jobs:
           # kubectl get services -o wide
         run: |
           kubectl apply -f k8s/manifests/service.yaml
+          kubectl apply -f k8s/manifests/deployment.yaml
