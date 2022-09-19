@@ -8,6 +8,9 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  SERVICE_JSON: ${{ secrets.KEYFILE }}
+  PROJECT_ID: kubernetes-351917
+  CLUSTER_NAME: 
 
 jobs:
   build-and-push-image:
@@ -37,12 +40,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-#  steps:
-      - uses: 'actions/checkout@v3'
-
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+        
+      - name: kubectl - Google Cloud GKE cluster.
+        uses: ameydev/gke-kubectl-action@master
+        env:
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          # CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
+          CLUSTER_NAME: lennon
+          ZONE_NAME: europe-north1	
         with:
-          credentials_json: '${{ secrets.KEYFILE }}'
+          args: apply -f k8s/manifests/service.yaml
