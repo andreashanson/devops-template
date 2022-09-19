@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   SERVICE_JSON: ${{ secrets.KEYFILE }}
   PROJECT_ID: kubernetes-351917
-  CLUSTER_NAME: 
+  CLUSTER_NAME: lennon
 
 jobs:
   build-and-push-image:
@@ -44,8 +44,9 @@ jobs:
       - name: kubectl - Google Cloud GKE cluster.
         uses: ameydev/gke-kubectl-action@master
         env:
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          # PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          PROJECT_ID: ${{ env.PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.KEYFILE }}
           # CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
           CLUSTER_NAME: lennon
           ZONE_NAME: europe-north1	
