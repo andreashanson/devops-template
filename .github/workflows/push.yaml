@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: 'write'
+      contents: 'read'
       id-token: 'write'
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
@@ -45,12 +45,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - uses: 'actions/checkout@v3'
-
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
         with:
-          workload_identity_provider: 'projects/752695780637/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
-          service_account: 'lennon-k8s@kubernetes-351917.iam.gserviceaccount.com'
-        
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
+     
