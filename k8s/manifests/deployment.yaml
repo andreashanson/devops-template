@@ -17,5 +17,6 @@ spec:
       containers:
       - name: devops
         image: ghcr.io/andreashanson/devops-template:main
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
