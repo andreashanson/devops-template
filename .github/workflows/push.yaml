@@ -50,14 +50,3 @@ jobs:
           workload_identity_provider: 'projects/752695780637/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'lennon-k8s@kubernetes-351917.iam.gserviceaccount.com'
         
-      - name: kubectl - Google Cloud GKE cluster.
-        uses: ameydev/gke-kubectl-action@master
-        env:
-          # PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          PROJECT_ID: ${{ env.PROJECT_ID }}
-          APPLICATION_CREDENTIALS: ${{ secrets.KEYFILE }}
-          # CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
-          CLUSTER_NAME: lennon
-          ZONE_NAME: europe-north1	
-        with:
-          args: apply -f k8s/manifests/service.yaml
